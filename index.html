@@ -14,100 +14,67 @@
       <span id="lblAvailability" class="ProductDetailsAvailability"
         >Status:
         <span id="lblProductStatus" class="ProductDetailsAvailability"
-          >Order now, we roast &amp; mail on Tue 4/20</span
+          ></span
         ></span
       >
       <script>
-        let days = [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ];
 
-        console.log(
-          new Date().getUTCMonth() +
-            " " +
-            new Date().getUTCDate() +
-            " " +
-            new Date().getUTCDay() +
-            " " +
-            new Date().getUTCHours()
-        );
+        let currentDate = new Date();
 
-        function convertTZ(date, tzString) {
-          return new Date(
-            (typeof date === "string"
-              ? new Date(date)
-              : date
-            ).toLocaleString("en-US", { timeZone: tzString })
-          );
-        }
+        function countTheDateOfRoast(date) {
+          /**
+           * Implement hours in the week in the 168 format. And count current hour with formula behind.
+          */
+          let absoluteHours = currentDate.getDay() * 24 - 24 + currentDate.getHours();
 
-        console.log();
-
-        let dateArr = [
-          new Date(2021, 3, 18, 13),
-          new Date(2021, 3, 18, 4),
-          new Date(2021, 3, 19, 16),
-          new Date(2021, 3, 19, 1),
-          new Date(2021, 3, 20, 23),
-          new Date(2021, 3, 20, 0),
-          new Date(2021, 3, 21, 12),
-          new Date(2021, 3, 21, 1),
-          new Date(2021, 3, 22, 13),
-          new Date(2021, 3, 22, 3),
-          new Date(2021, 3, 23, 13),
-          new Date(2021, 3, 23, 3),
-          new Date(2021, 3, 24, 13),
-          new Date(2021, 3, 24, 3),
-          new Date(2021, 3, 25, 13),
-          new Date(2021, 3, 25, 3),
-        ];
-
-
-        let someDate = new Date(2021, 3, 30, 6);
-
-        function countDate2(date) {
-          let absoluteHours = date.getDay() * 24 - 24 + date.getHours();
-
+          /**
+           * The date this function will return.
+          */
           let roastDate = new Date();
-          console.log(absoluteHours);
+
+          /**
+           * Then create if else statments to define in which time sector current time is.
+           * After that return the string with hardtyped name of the day (because we know which day of the week we need for each time sector).
+           * And in the end of the string count day and mounth. This is a hardest part of the script. 
+           *  Because you have to many conditions and special casees (as 30 31-th days, 28 29 in februarry, New Year etc.).
+           *  So it's dificult to hardtype it with just conditional statements. So I used absolute time that provides with the .getTime() method of Date class.
+           *  It gives you a number of miliseconds since January 1, 1970.
+           *  So I just plus this time and the diference between the next roast day and current time in milliseconds. 
+           *  And then set up this value to the returning Date variable with the method .setTime().
+          */
+
           if (absoluteHours >= 6 && absoluteHours < 30) {
             return `Order now, we roast &amp; mail on Tue ${(() => {
               roastDate.setTime(
-                new Date(someDate).getTime() + (30 - absoluteHours) * 3600000
+                new Date(currentDate).getTime() + (30 - absoluteHours) * 3600000
               );
               return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
             })()}`;
           } else if (absoluteHours >= 30 && absoluteHours < 54) {
             return `Order now, we roast &amp; mail on Wed ${(() => {
               roastDate.setTime(
-                new Date(someDate).getTime() + (54 - absoluteHours) * 3600000
+                new Date(currentDate).getTime() + (54 - absoluteHours) * 3600000
               );
               return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
             })()}`;
           } else if (absoluteHours >= 54 && absoluteHours < 102) {
             return `Order now, we roast &amp; mail on Fri ${(() => {
               roastDate.setTime(
-                new Date(someDate).getTime() + (102 - absoluteHours) * 3600000
+                new Date(currentDate).getTime() + (102 - absoluteHours) * 3600000
               );
               return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
             })()}`;
           } else if (absoluteHours >= 102 && absoluteHours < 168) {
             return `Order now, we roast &amp; mail on Mon ${(() => {
               roastDate.setTime(
-                new Date(someDate).getTime() + (168 - absoluteHours) * 3600000
+                new Date(currentDate).getTime() + (168 - absoluteHours) * 3600000
               );
               return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
             })()}`;
           } else if (absoluteHours < 6) {
             return `Order now, we roast &amp; mail on Mon ${(() => {
               roastDate.setTime(
-                new Date(someDate).getTime() + (6 - absoluteHours) * 3600000
+                new Date(currentDate).getTime() + (6 - absoluteHours) * 3600000
               );
               return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
             })()}`;
@@ -116,7 +83,8 @@
           }
         }
 
-        console.log(countDate2(someDate));
+        document.querySelector("#lblProductStatus").innerHTML = countTheDateOfRoast(currentDate);
+        console.log(countTheDateOfRoast(currentDate));
 
       </script>
     </div>
