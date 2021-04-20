@@ -47,20 +47,6 @@
           );
         }
 
-        // usage: Asia/Jakarta is GMT+7
-        convertTZ("2012/04/10 10:10:30 +0000", "Asia/Jakarta"); // Tue Apr 10 2012 17:10:30 GMT+0700 (Western Indonesia Time)
-
-        // Resulting value is regular Date() object
-        const convertedDate = convertTZ(
-          "2012/04/10 10:10:30 +0000",
-          "Asia/Jakarta"
-        );
-        convertedDate.getHours(); // 17
-
-        // Bonus: You can also put Date object to first arg
-        const date = new Date();
-        convertTZ(date, "Asia/Jakarta"); // current date-time in jakarta.
-
         console.log();
 
         let dateArr = [
@@ -82,141 +68,56 @@
           new Date(2021, 3, 25, 3),
         ];
 
-        //   console.log(date.getHours());
-        //   console.log(date);
-        function countDate(date) {
-          switch (true) {
-            case (date.getDay() === 1 && date.getHours() > 5) ||
-              (date.getDay() === 2 && date.getHours() < 6):
-              if (date.getDay() === 1) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay() + 1]
-                } ${date.getMonth() + 1} / ${date.getDate() + 1}`;
-              } else if (date.getDay() === 2) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay()]
-                } ${date.getMonth() + 1} / ${date.getDate()}`;
-              }
-              break;
 
-            case (date.getDay() === 2 && date.getHours() > 5) ||
-              (date.getDay() === 3 && date.getHours() < 6):
-              if (date.getDay() === 2) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay() + 1]
-                } ${date.getMonth() + 1} / ${date.getDate() + 1}`;
-              } else if (date.getDay() === 3) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay()]
-                } ${date.getMonth() + 1} / ${date.getDate()}`;
-              }
-              break;
+        let someDate = new Date(2021, 3, 30, 6);
 
-            case (date.getDay() === 3 && date.getHours() > 5) ||
-              (date.getDay() === 4 && date.getHours() < 6):
-              if (date.getDay() === 3) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay() + 2]
-                } ${date.getMonth() + 1} / ${date.getDate() + 2}`;
-              } else if (date.getDay() === 4) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay() + 1]
-                } ${date.getMonth() + 1} / ${date.getDate() + 1}`;
-              }
-              break;
+        function countDate2(date) {
+          let absoluteHours = date.getDay() * 24 - 24 + date.getHours();
 
-            case (date.getDay() === 4 && date.getHours() > 5) ||
-              (date.getDay() === 5 && date.getHours() < 6):
-              if (date.getDay() === 4) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay() + 1]
-                } ${date.getMonth() + 1} / ${date.getDate() + 1}`;
-              } else if (date.getDay() === 5) {
-                return `Order now, we roast &amp; mail on ${
-                  days[date.getDay()]
-                } ${date.getMonth() + 1} / ${date.getDate()}`;
-              }
-              break;
-
-            case (date.getDay() === 5 && date.getHours() > 5) ||
-              (date.getDay() === 6 && date.getHours() < 6):
-              if (date.getDay() === 5) {
-                return `Order now, we roast &amp; mail on ${days[1]} ${
-                  date.getMonth() + 1
-                } / ${date.getDate() + 3}`;
-              } else if (date.getDay() === 6) {
-                return `Order now, we roast &amp; mail on ${days[1]} ${
-                  date.getMonth() + 1
-                } / ${date.getDate() + 2}`;
-              }
-              break;
-
-            case (date.getDay() === 6 && date.getHours() > 5) ||
-              (date.getDay() === 0 && date.getHours() < 6):
-              if (date.getDay() === 6) {
-                return `Order now, we roast &amp; mail on ${days[1]} ${
-                  date.getMonth() + 1
-                } / ${date.getDate() + 3}`;
-              } else if (date.getDay() === 0) {
-                return `Order now, we roast &amp; mail on ${days[1]} ${
-                  date.getMonth() + 1
-                } / ${date.getDate() + 1}`;
-              }
-              break;
-
-            case (date.getDay() === 0 && date.getHours() > 5) ||
-              (date.getDay() === 1 && date.getHours() < 6):
-              if (date.getDay() === 0) {
-                return `Order now, we roast &amp; mail on ${days[1]} ${
-                  date.getMonth() + 1
-                } / ${date.getDate() + 3}`;
-              } else if (date.getDay() === 1) {
-                return `Order now, we roast &amp; mail on ${days[1]} ${
-                  date.getMonth() + 1
-                } / ${date.getDate() + 1}`;
-              }
-              break;
-
-            default:
-              break;
+          let roastDate = new Date();
+          console.log(absoluteHours);
+          if (absoluteHours >= 6 && absoluteHours < 30) {
+            return `Order now, we roast &amp; mail on Tue ${(() => {
+              roastDate.setTime(
+                new Date(someDate).getTime() + (30 - absoluteHours) * 3600000
+              );
+              return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+            })()}`;
+          } else if (absoluteHours >= 30 && absoluteHours < 54) {
+            return `Order now, we roast &amp; mail on Wed ${(() => {
+              roastDate.setTime(
+                new Date(someDate).getTime() + (54 - absoluteHours) * 3600000
+              );
+              return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+            })()}`;
+          } else if (absoluteHours >= 54 && absoluteHours < 102) {
+            return `Order now, we roast &amp; mail on Fri ${(() => {
+              roastDate.setTime(
+                new Date(someDate).getTime() + (102 - absoluteHours) * 3600000
+              );
+              return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+            })()}`;
+          } else if (absoluteHours >= 102 && absoluteHours < 168) {
+            return `Order now, we roast &amp; mail on Mon ${(() => {
+              roastDate.setTime(
+                new Date(someDate).getTime() + (168 - absoluteHours) * 3600000
+              );
+              return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+            })()}`;
+          } else if (absoluteHours < 6) {
+            return `Order now, we roast &amp; mail on Mon ${(() => {
+              roastDate.setTime(
+                new Date(someDate).getTime() + (6 - absoluteHours) * 3600000
+              );
+              return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
+            })()}`;
+          } else {
+            return "somthing wrong";
           }
-
-          //   if (date.getDay() === 1 && date.getHours() > 5) {
-          //     return `Order now, we roast &amp; mail on Tue ${
-          //       date.getMonth() + 1
-          //     } / ${date.getDate() + 1}`;
-          //   } else if (
-          //     (date.getDay() === 2 && date.getHours() > 5) ||
-          //     (date.getDay() === 1 && date.getHours() < 6)
-          //   ) {
-          //     return `Order now, we roast &amp; mail on Wen ${
-          //       date.getMonth() + 1
-          //     } / ${date.getDate() + 1}`;
-          //   } else if (
-          //     ((date.getDay() === 3 || date.getDay() === 4) &&
-          //       date.getHours() > 5) ||
-          //     (date.getDay() === 2 && date.getHours() < 6)
-          //   ) {
-          //     return `Order now, we roast &amp; mail on Tue ${
-          //       date.getMonth() + 1
-          //     } / ${date.getDate() + 2}`;
-          //   } else if (
-          //     ((date.getDay() === 5 ||
-          //       date.getDay() === 6 ||
-          //       date.getDay() === 0) &&
-          //       date.getHours() > 5) ||
-          //     ((date.getDay() === 3 || date.getDay() === 4) &&
-          //       date.getHours() < 6)
-          //   ) {
-          //     return `Order now, we roast &amp; mail on Tue ${
-          //       date.getMonth() + 1
-          //     } / ${date.getDate() + 3}`;
-          //   }
         }
 
-        // dateArr.map((x) => {
-        //   console.log("Massage for " + x + "\n" + countDate(x));
-        // });
+        console.log(countDate2(someDate));
+
       </script>
     </div>
   </body>
