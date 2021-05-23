@@ -1,15 +1,28 @@
-let currentDate = new Date();
+'use strict';
 
-function countTheDateOfRoast(date) {
+function countTheDateOfRoast(localeDate) {
+  console.log("🚀 ~ localeDate", localeDate)
+
+
+  // convert locale time to PDT
+  let PDTtime = new Date(localeDate.toLocaleString('en-US', {
+    timeZone: 'US/Pacific'
+  }));
+  console.log("🚀 ~ PDTtime", PDTtime)
+
+
   /**
    * Implement hours in the week in the 168 format. And count current hour with formula behind.
   */
-  let absoluteHours = currentDate.getDay() * 24 - 24 + currentDate.getHours();
+  let absoluteHours = PDTtime.getDay() * 24 - 24 + PDTtime.getHours();
 
   /**
-   * The date this function will return.
+   * This object the function will return.
   */
-  let roastDate = new Date();
+  let roastDate = new Date(PDTtime);
+  console.log("🚀 ~ roastDate", roastDate)
+
+
 
   /**
    * Then create if else statments to define in which time sector current time is.
@@ -27,35 +40,35 @@ function countTheDateOfRoast(date) {
   if (absoluteHours >= 6 && absoluteHours < 30) {
     return `Order now, we roast &amp; mail on Tue ${(() => {
       roastDate.setTime(
-        new Date(currentDate).getTime() + (30 - absoluteHours) * 3600000
+        new Date(PDTtime).getTime() + (30 - absoluteHours) * 3600000
       );
-      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
     })()}`;
   } else if (absoluteHours >= 30 && absoluteHours < 54) {
     return `Order now, we roast &amp; mail on Wed ${(() => {
       roastDate.setTime(
-        new Date(currentDate).getTime() + (54 - absoluteHours) * 3600000
+        new Date(PDTtime).getTime() + (54 - absoluteHours) * 3600000
       );
-      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
     })()}`;
   } else if (absoluteHours >= 54 && absoluteHours < 102) {
     return `Order now, we roast &amp; mail on Fri ${(() => {
       roastDate.setTime(
-        new Date(currentDate).getTime() + (102 - absoluteHours) * 3600000
+        new Date(PDTtime).getTime() + (102 - absoluteHours) * 3600000
       );
-      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
     })()}`;
   } else if (absoluteHours >= 102 && absoluteHours < 168) {
     return `Order now, we roast &amp; mail on Mon ${(() => {
       roastDate.setTime(
-        new Date(currentDate).getTime() + (168 - absoluteHours) * 3600000
+        new Date(PDTtime).getTime() + (168 - absoluteHours) * 3600000
       );
-      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate() ;
+      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
     })()}`;
   } else if (absoluteHours < 6) {
     return `Order now, we roast &amp; mail on Mon ${(() => {
       roastDate.setTime(
-        new Date(currentDate).getTime() + (6 - absoluteHours) * 3600000
+        new Date(PDTtime).getTime() + (6 - absoluteHours) * 3600000
       );
       return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
     })()}`;
@@ -64,5 +77,9 @@ function countTheDateOfRoast(date) {
   }
 }
 
-document.querySelector("#lblProductStatus").innerHTML = countTheDateOfRoast(currentDate);
-console.log(countTheDateOfRoast(currentDate));
+
+document.querySelector("#lblProductStatus").innerHTML = countTheDateOfRoast(new Date());
+console.log(countTheDateOfRoast(new Date()));
+
+
+exports.countTheDateOfRoast = countTheDateOfRoast;
