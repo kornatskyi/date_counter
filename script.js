@@ -1,15 +1,12 @@
 'use strict';
 
 function countTheDateOfRoast(localeDate) {
-  console.log("🚀 ~ localeDate", localeDate)
 
 
   // convert locale time to PDT
   let PDTtime = new Date(localeDate.toLocaleString('en-US', {
     timeZone: 'US/Pacific'
   }));
-  console.log("🚀 ~ PDTtime", PDTtime)
-
 
   /**
    * Implement hours in the week in the 168 format. And count current hour with formula behind.
@@ -20,9 +17,6 @@ function countTheDateOfRoast(localeDate) {
    * This object the function will return.
   */
   let roastDate = new Date(PDTtime);
-  console.log("🚀 ~ roastDate", roastDate)
-
-
 
   /**
    * Then create if else statments to define in which time sector current time is.
@@ -37,14 +31,7 @@ function countTheDateOfRoast(localeDate) {
    *
   */
 
-  if (absoluteHours >= 6 && absoluteHours < 30) {
-    return `Order now, we roast &amp; mail on Tue ${(() => {
-      roastDate.setTime(
-        new Date(PDTtime).getTime() + (30 - absoluteHours) * 3600000
-      );
-      return (roastDate.getMonth() + 1) + "/" + roastDate.getDate();
-    })()}`;
-  } else if (absoluteHours >= 30 && absoluteHours < 54) {
+   if (absoluteHours >= 6 && absoluteHours < 54) {
     return `Order now, we roast &amp; mail on Wed ${(() => {
       roastDate.setTime(
         new Date(PDTtime).getTime() + (54 - absoluteHours) * 3600000
@@ -77,9 +64,11 @@ function countTheDateOfRoast(localeDate) {
   }
 }
 
+if (document.querySelector("#lblProductStatus").innerHTML === "coffee") {
+  document.querySelector("#lblProductStatus").innerHTML = countTheDateOfRoast(new Date());
+}
 
-document.querySelector("#lblProductStatus").innerHTML = countTheDateOfRoast(new Date());
 console.log(countTheDateOfRoast(new Date()));
 
 
-exports.countTheDateOfRoast = countTheDateOfRoast;
+// exports.countTheDateOfRoast = countTheDateOfRoast;

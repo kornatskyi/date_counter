@@ -11,7 +11,7 @@ test('input May 24, 2021 05:24:00 return ', () => {
 });
 
 test('input May 24, 2021 06:24:00 return ', () => {
-    expect(script.countTheDateOfRoast(new Date('May 24, 2021 06:24:00'))).toBe("Order now, we roast &amp; mail on Tue 5/25");
+    expect(script.countTheDateOfRoast(new Date('May 24, 2021 06:24:00'))).toBe("Order now, we roast &amp; mail on Wed 5/26");
 });
 
 test('input May 25, 2021 06:24:00 return ', () => {
